@@ -1,0 +1,10 @@
+header:
+  version: 15
+  includes:
+    - includes/base.yml
+machine: imdt-v2n-sbc
+repos:
+    meta-renesas:
+      layers:
+        meta-rzv2n:
+        meta-rzv2h:

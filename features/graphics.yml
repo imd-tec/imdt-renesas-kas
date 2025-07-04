@@ -1,0 +1,9 @@
+header:
+  version: 15
+repos:
+#These can be downloaded from the Renesas website after accepting the license agreement
+  rz-features-proprietary:
+    path: sources/meta-rz-features
+    layers:
+      meta-rz-graphics:
+      meta-rz-codecs:

@@ -1,0 +1,10 @@
+header:
+  version: 15
+
+repos:
+  rzv2h_opencv_accelerator:
+    url: https://github.com/renesas-rz/rzv2h_opencv_accelerator
+    commit: 69e987195542b33542669e397bfac68c2de4e9c0
+    path: sources/meta-rz-features/rzv2h_opencv_accelerator
+    layers:
+      meta-rz-features/meta-rz-opencva:
