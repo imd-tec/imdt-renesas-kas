@@ -3,5 +3,5 @@ header:
 
 repos:
 #These can be downloaded from the Renesas website after accepting the license agreement
-  meta-rz-features-graphics:
-    path: sources/meta-rz-features/meta-rz-graphics
+  meta-rz-features-codecs:
+    path: sources/meta-rz-features/meta-rz-codecs

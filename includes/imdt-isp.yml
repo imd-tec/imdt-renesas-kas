@@ -1,0 +1,5 @@
+header:
+  version: 15
+repos:
+  meta-imdt-renesas-isp:
+    path: sources/meta-imdt-renesas-isp

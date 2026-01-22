@@ -1,0 +1,10 @@
+header:
+  version: 15
+  includes:
+  - v2h.yml  # Include the v2h machine configuration and base.yml
+  - includes/imdt.yml
+  - includes/imdt-isp.yml
+  - images/isp.yml
+  - features/isp.yml
+  - features/v2h-drpai.yml
+  - features/graphics.yml

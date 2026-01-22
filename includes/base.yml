@@ -25,6 +25,7 @@ repos:
       meta-networking:
       meta-filesystems:
       meta-multimedia:
+
   meta-virtualization:
     url: https://git.yoctoproject.org/git/meta-virtualization
     commit: 521459bf588435e847d981657485bae8d6f003b5
@@ -42,11 +43,6 @@ repos:
     url: https://github.com/sbabic/meta-swupdate
     commit: 05d4f99ae1db40b2c7e6644ca9f18e111fc88bda
     path: sources/meta-swupdate
-
-  meta-imdt-renesas:
-    url: https://github.com/imd-tec/meta-imdt-renesas
-    commit: 8c893cd29492ade153dc04856c84c54f8b90eee0
-    path: sources/meta-imdt-renesas
 
 local_conf_header:
   imdt: |

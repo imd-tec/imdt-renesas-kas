@@ -1,0 +1,5 @@
+header:
+  version: 15
+repos:
+  meta-rz-isp:
+    path: sources/meta-rz-isp
