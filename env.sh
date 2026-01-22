@@ -33,4 +33,4 @@ docker run -it --rm \
     $DL_MOUNT \
     -w /home/$USER_NAME/workspace \
     $IMAGE \
-    bash
+    bash -l

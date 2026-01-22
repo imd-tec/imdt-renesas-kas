@@ -3,5 +3,5 @@ header:
 repos:
   meta-imdt-renesas:
     url: https://github.com/imd-tec/meta-imdt-renesas
-    commit: d0a65b6a2a6f17fcd1b2bb95ed2c465d77f9ff7f
+    commit: 170f31f46974277bc26740b481274d0001af2e87
     path: sources/meta-imdt-renesas
