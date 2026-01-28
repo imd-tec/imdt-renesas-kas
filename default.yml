@@ -1,11 +1,16 @@
 header:
   version: 15
   includes:
-  - includes/base.yml
-  - machine/v2h.yml
-  - includes/imdt.yml
-  - includes/imdt-isp.yml
-  - images/isp.yml
-  - features/isp.yml
-  - features/v2h-drpai.yml
-  - features/graphics.yml
+    - includes/base.yml
+    - machine/v2h.yml
+    - includes/imdt.yml
+  # features
+    - includes/imdt-isp.yml
+    - features/v2h-drpai.yml
+    - features/codecs.yml
+  # proprietary feature layers
+    - features/graphics.yml
+    - features/isp.yml
+    - features/codecs.yml
+  # image
+    - images/isp.yml
