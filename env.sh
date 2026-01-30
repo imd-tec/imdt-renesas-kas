@@ -28,7 +28,8 @@ fi
 # 3. Run Docker with the captured user info
 docker run -it --rm \
     --user $USER_ID:$GROUP_ID \
-    -v ~/.ssh:/home/$USER_NAME/.ssh \
+    -v ~/.ssh:/home/$USER_NAME/.ssh:ro \
+    -v ~/.gitconfig:/home/$USER_NAME/.gitconfig:ro \
     -v "$WORKSPACE_DIR":/home/$USER_NAME/workspace \
     $DL_MOUNT \
     -w /home/$USER_NAME/workspace \
