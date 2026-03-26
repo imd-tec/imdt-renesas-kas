@@ -12,7 +12,6 @@ config KAS_BUILD_SYSTEM
 config KAS_INCLUDE_BASE
     string
     default "includes/base.yml"
-    default "includes/imdt.yml"
     help
       Base layer configuration - always included first.
       Defines poky, meta-openembedded, meta-renesas and other core layers.
@@ -21,32 +20,14 @@ config KAS_INCLUDE_IMDT
     string
     default "includes/imdt.yml"
     help
-      Base layer configuration - always included first.
-      Defines poky, meta-openembedded, meta-renesas and other core layers.
-
-# =============================================================================
-# Target SoC Selection
-# =============================================================================
-choice
-    prompt "Target SoC"
-    default MACHINE_V2H
-
-config MACHINE_V2H
-    bool "V2H (imdt-v2h-sbc)"
-    help
-      Build for the Renesas RZ/V2H platform.
-
-config MACHINE_V2N
-    bool "V2N (imdt-v2n-sbc)"
-    help
-      Build for the Renesas RZ/V2N platform.
-
-endchoice
+      IMDT layer configuration - always included.
 
 config KAS_INCLUDE_MACHINE
     string
-    default "machine/v2h.yml" if MACHINE_V2H
-    default "machine/v2n.yml" if MACHINE_V2N
+    default "machine/v2h.yml"
+    help
+      Machine configuration - always included.
+      Defines the target machine (V2H).
 
 # =============================================================================
 # Graphics Support (Proprietary)
@@ -55,7 +36,6 @@ menu "Graphics"
 
 config GRAPHICS_ENABLE
     bool "Enable Graphics support (proprietary)"
-    default y
     help
       Include proprietary graphics support.
       Requires SSH access to proprietary repositories.
@@ -71,8 +51,6 @@ endmenu
 # AI/ML Acceleration Features
 # =============================================================================
 menu "AI/ML Acceleration"
-
-if MACHINE_V2H
 
 config V2H_DRPAI
     bool "DRP-AI (V2H)"
@@ -122,82 +100,6 @@ config KAS_INCLUDE_V2H_OPENCVA
     depends on V2H_OPENCVA
     default "features/v2h-opencva.yml"
 
-endif # MACHINE_V2H
-
-if MACHINE_V2N
-
-config V2N_ACCEL_ENABLE
-    bool "Enable Accelerator (V2N)"
-    default y
-    help
-      Enable hardware acceleration selection for V2N.
-      Choose between DRP-AI, Video Codecs, or OpenCV Accelerator.
-
-if V2N_ACCEL_ENABLE
-
-choice
-    prompt "V2N Accelerator Selection"
-    default V2N_DRPAI
-
-config V2N_DRPAI
-    bool "DRP-AI"
-    help
-      Enable DRP-AI acceleration for V2N.
-
-config V2N_CODECS
-    bool "Video Codecs (proprietary)"
-    help
-      Enable hardware video codec support for V2N.
-
-config V2N_OPENCVA
-    bool "OpenCV Accelerator"
-    help
-      Enable OpenCV hardware acceleration for V2N.
-
-endchoice
-
-endif # V2N_ACCEL_ENABLE
-
-config KAS_INCLUDE_V2N_DRPAI
-    string
-    depends on V2N_DRPAI
-    default "features/v2n-drpai.yml"
-
-config KAS_INCLUDE_V2N_CODECS
-    string
-    depends on V2N_CODECS
-    default "features/codecs.yml"
-
-config KAS_INCLUDE_V2N_OPENCVA
-    string
-    depends on V2N_OPENCVA
-    default "features/v2n-opencva.yml"
-
-endif # MACHINE_V2N
-
-endmenu
-
-# =============================================================================
-# ISP (Image Signal Processor) Support (Proprietary)
-# =============================================================================
-menu "ISP Support"
-
-config ISP_ENABLE
-    bool "Enable ISP support (proprietary)"
-    default y
-    help
-      Include proprietary ISP (Image Signal Processor) support.
-      Requires SSH access to proprietary repositories.
-
-config KAS_INCLUDE_ISP
-    string
-    depends on ISP_ENABLE
-    default "features/isp.yml"
-
-config KAS_INCLUDE_ISP_IMDT
-    string
-    depends on ISP_ENABLE
-    default "includes/imdt-isp.yml"
 
 endmenu
 
@@ -208,7 +110,7 @@ menu "Target Image"
 
 choice
     prompt "Image type"
-    default IMAGE_ISP
+    default IMAGE_WESTON
 
 config IMAGE_WESTON
     bool "Weston (Wayland compositor)"
@@ -220,19 +122,12 @@ config IMAGE_CORE
     help
       Build a minimal console image.
 
-config IMAGE_ISP
-    bool "ISP Development"
-    depends on ISP_ENABLE
-    help
-      Build an ISP-focused development image.
-
 endchoice
 
 config KAS_INCLUDE_IMAGE
     string
     default "images/weston.yml" if IMAGE_WESTON
     default "images/core.yml" if IMAGE_CORE
-    default "images/isp.yml" if IMAGE_ISP
 
 endmenu
 

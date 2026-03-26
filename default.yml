@@ -5,12 +5,13 @@ header:
     - machine/v2h.yml
     - includes/imdt.yml
   # features
-    - includes/imdt-isp.yml
     - features/v2h-drpai.yml
-    - features/codecs.yml
   # proprietary feature layers
-    - features/graphics.yml
-    - features/isp.yml
-    - features/codecs.yml
+    # - features/graphics.yml
+    # - features/codecs.yml
   # image
-    - images/isp.yml
+    - images/weston.yml
+
+  local_conf_header:
+    buildinfo: |
+      INHERIT += "image-buildinfo"

@@ -1,34 +1,63 @@
 # IMDT Renesas Yocto Build Environment
 
-This repository provides a Docker-based build environment for building Yocto images for IMDT Renesas boards (V2H-SBC, V2N-SBC).
+This repository provides KAS configuration files for building Yocto images for IMDT Renesas boards (V2H-SBC, V2N-SBC) using `kas-container`.
 
 ## Quick Start
 
-```
-./env.sh
+Source the environment setup script, then build or open a shell:
+
+```bash
+source env.sh -v
+kas-container build <config>.yml
 ```
 
-This builds a Docker image with all Yocto dependencies and drops you into an interactive shell. From there, use `kas menu` to configure and build your image.
+Or to interactively configure and build:
+
+```bash
+source env.sh
+kas-container shell <config>.yml
+```
 
 ## What env.sh Does
 
-The script:
+The script sets up environment variables for `kas-container`:
 
-1. Builds a Docker image based on Ubuntu 20.04 with all Yocto build dependencies
-2. Creates a container user matching your host UID/GID for correct file permissions
-3. Mounts your current directory as the workspace
-4. Mounts your SSH keys (`~/.ssh`) for repository access
-5. Mounts your git configuration (`~/.gitconfig`) for commit operations
+1. Sets `KAS_WORK_DIR` to your current working directory
+2. Adds `kas-container` to your `PATH`
+3. Sets the kas container image version (`KAS_IMAGE_VERSION`)
+4. Optionally configures a custom build directory (`-b <path>`)
 
-## Advanced Configuration
+## Usage
 
-### Shared Downloads Directory
+### Building an Image
 
-Yocto downloads source tarballs during the build which can take significant time and disk space. To share downloads across multiple builds or workspaces, set `DL_MIRROR_DIR` before running the script:
-
-```
-export DL_MIRROR_DIR=/path/to/shared/downloads
-./env.sh
+```bash
+source env.sh
+kas-container build default.yml
 ```
 
-This mounts the specified directory at `~/downloads` inside the container. Configure your kas/Yocto build to use this location for `DL_DIR` to avoid re-downloading sources.
+### Interactive Shell
+
+Drop into a shell inside the kas container with the build environment configured:
+
+```bash
+source env.sh
+kas-container shell default.yml
+```
+
+From there you can run BitBake commands directly.
+
+### Menu Configuration
+
+```bash
+source env.sh
+kas-container menu
+```
+
+## env.sh Options
+
+```
+-b, --build     Set build directory path (default: build)
+-v, --verbose   Print environment variables
+-h, --help      Print usage
+```

@@ -1,7 +1,0 @@
-header:
-  version: 15
-repos:
-  meta-imdt-renesas-isp:
-    url: https://github.com/imd-tec/meta-imdt-renesas-isp
-    commit: 2ad9fb2728e29d7b3625bffe4e5955ab67144fdd
-    path: sources/meta-imdt-renesas-isp

@@ -1,93 +1,71 @@
 header:
   version: 15
+
 repos:
+  meta-renesas:
+    url: https://github.com/renesas-rz/meta-renesas
+    branch: scarthgap/rz
+    path: sources/meta-renesas
+    layers:
+      meta-rz-distro:
+      meta-rz-bsp:
   poky:
     url: https://git.yoctoproject.org/git/poky
-    commit: 63d05fc061006bf1a88630d6d91cdc76ea33fbf2
+    branch: scarthgap
     path: sources/poky
+    commit: ae2d52758fc2fcb0ed996aa234430464ebf4b310
     layers:
       meta:
       meta-poky:
       meta-yocto-bsp:
 
-  meta-gplv2:
-    url: https://git.yoctoproject.org/git/meta-gplv2
-    commit: 60b251c25ba87e946a0ca4cdc8d17b1cb09292ac
-    path: sources/meta-gplv2
-
+  meta-arm:
+    url: https://git.yoctoproject.org/meta-arm
+    # yocto-5.0.2
+    path: sources/meta-arm
+    commit: 8e0f8af90fefb03f08cd2228cde7a89902a6b37c
+    layers:
+      meta-arm-toolchain:
+      meta-arm:
+  
   meta-openembedded:
     url: https://github.com/openembedded/meta-openembedded
-    commit: daa4619fe3fbf8c28f342c4a7163a84a330f7653
+    branch: scarthgap
     path: sources/meta-openembedded
+    commit: c29a18fa39ede952f3f6108ec007c1906e2d9a0d
     layers:
       meta-oe:
       meta-python:
-      meta-networking:
-      meta-filesystems:
       meta-multimedia:
-
-  meta-virtualization:
-    url: https://git.yoctoproject.org/git/meta-virtualization
-    commit: 521459bf588435e847d981657485bae8d6f003b5
-    path: sources/meta-virtualization
-
-  meta-renesas:
-    url: https://github.com/renesas-rz/meta-renesas
-    commit: d6aff60570be4ad044cd52de80c5d4ef621b5743
-    path: sources/meta-renesas
-    layers:
-      meta-rz-common:
-      meta-rzg2l:
 
   meta-swupdate:
     url: https://github.com/sbabic/meta-swupdate
-    commit: 05d4f99ae1db40b2c7e6644ca9f18e111fc88bda
+    branch: scarthgap
+    commit: 226701adf0f7c8ed08d4d6a7783e88d34ef2d5e9
     path: sources/meta-swupdate
 
+env:
+  IMDT_DISTRO_VERSION: "0.0.0" # Place holder - will be replaced by the actual tag in the build environment
 local_conf_header:
   imdt: |
-    DISTRO ?= "poky"
-    PACKAGE_CLASSES ?= "package_rpm"
-    EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
-    USER_CLASSES ?= "buildstats image-mklibs image-prelink"
-    PATCHRESOLVE = "noop"
-    BB_DISKMON_DIRS ??= "\
+    DISTRO ?= "imdt"
+    CONF_VERSION = "2"
+    BB_DISKMON_DIRS ?= " \
         STOPTASKS,${TMPDIR},1G,100K \
         STOPTASKS,${DL_DIR},1G,100K \
         STOPTASKS,${SSTATE_DIR},1G,100K \
         STOPTASKS,/tmp,100M,100K \
-        ABORT,${TMPDIR},100M,1K \
-        ABORT,${DL_DIR},100M,1K \
-        ABORT,${SSTATE_DIR},100M,1K \
-        ABORT,/tmp,10M,1K"
-    PACKAGECONFIG_append_pn-qemu-system-native = " sdl"
-    CONF_VERSION = "1"
-    DISTRO_FEATURES_append = " systemd"
-    VIRTUAL-RUNTIME_init_manager = "systemd"
-    SDKIMAGE_FEATURES_append = " staticdev-pkgs dev-pkgs dbg-pkgs"
-    DISTRO_FEATURES_append = " pam"
-    DISTRO_FEATURES_append = " wayland"
-    DISTRO_FEATURES_remove = " x11"
-    DISTRO_FEATURES_NATIVESDK_append = " wayland"
-    DISTRO_FEATURES_NATIVESDK_remove = " x11"
-    CIP_MODE = "Buster"
-    LICENSE_FLAGS_WHITELIST = " \
-      commercial_gstreamer1.0-plugins-ugly commercial_mpeg2dec \
-      commercial_gst-plugins-bad commercial_faad2 commercial_faac \
-      commercial_gstreamer1.0-libav commercial_ffmpeg commercial_x264 \
+        HALT,${TMPDIR},100M,1K \
+        HALT,${DL_DIR},100M,1K \
+        HALT,${SSTATE_DIR},100M,1K \
+        HALT,/tmp,10M,1K \
     "
-    require conf/multilib.conf
-    MULTILIBS = "multilib:lib32"
-    DEFAULTTUNE_virtclass-multilib-lib32 = "armv7vethf-neon-vfpv4"
-    USE_32BIT_PKGS = "1"
-    DISTRO_FEATURES_append = "${@oe.utils.conditional('VIRTUALIZATION_CHECK', 'True', ' virtualization', '', d)}"
-    PACKAGE_INSTALL_remove = " dnf "
-    WKS_SUPPORT ?= "1"
-    WKS_DEFAULT_FILE_rzv2h-dev = "rz-image-bootpart-mmc.wks"
-    WKS_DEFAULT_FILE_rzv2h-evk-alpha = "rz-image-bootpart-esd_rzv2h.wks"
-    WKS_DEFAULT_FILE_rzv2h-evk-ver1 = "rz-image-bootpart-esd_rzv2h.wks"
-    WKS_DEFAULT_FILE_imdt-v2h-sbc = "imdt-image.wks"
-    WKS_DEFAULT_FILE_imdt-v2n-sbc = "imdt-image.wks"
-    WKS_DEFAULT_FILE_rzv2n-dev = "rz-image-bootpart-mmc.wks"
-    WKS_DEFAULT_FILE_rzv2n-evk = "rz-image-bootpart-esd_rzv2n.wks"
-    IMAGE_ROOTFS_EXTRA_SPACE = "1048576"
+
+    # Extra image configuration defaults
+    EXTRA_IMAGE_FEATURES = "debug-tweaks tools-profile tools-testapps"
+
+    # Remove dnf package which causes high CPU workload
+    PACKAGE_INSTALL:remove = " dnf "
+
+    # Additional image features
+    USER_CLASSES ?= "buildstats"
