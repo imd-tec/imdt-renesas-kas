@@ -12,6 +12,6 @@ header:
   # image
     - images/weston.yml
 
-  local_conf_header:
-    buildinfo: |
-      INHERIT += "image-buildinfo"
+local_conf_header:
+  buildinfo: |
+    INHERIT += "image-buildinfo"
