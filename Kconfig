@@ -30,24 +30,6 @@ config KAS_INCLUDE_MACHINE
       Defines the target machine (V2H).
 
 # =============================================================================
-# Graphics Support (Proprietary)
-# =============================================================================
-menu "Graphics"
-
-config GRAPHICS_ENABLE
-    bool "Enable Graphics support (proprietary)"
-    help
-      Include proprietary graphics support.
-      Requires SSH access to proprietary repositories.
-
-config KAS_INCLUDE_GRAPHICS
-    string
-    depends on GRAPHICS_ENABLE
-    default "features/graphics.yml"
-
-endmenu
-
-# =============================================================================
 # AI/ML Acceleration Features
 # =============================================================================
 menu "AI/ML Acceleration"
